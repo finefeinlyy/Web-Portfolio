@@ -10,8 +10,8 @@ function Hero() {
     const handleScroll = () => {
       const offset = window.scrollY;
       controls.start({
-        y: offset * 0.3, // Moves text slower than scroll
-        opacity: 1 - offset / 500, // Fades text as you scroll down
+        y: offset * 0.3,
+        opacity: 1 - offset / 500,
       });
     };
 
@@ -26,7 +26,7 @@ function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col justify-center items-center text-center text-white px-6 overflow-hidden"
       style={{
-        background: "linear-gradient(to bottom, #6a00f4, #000000, #0033aa)", 
+        background: "linear-gradient(to bottom, #6a00f4, #000000, #0033aa)",
       }}
     >
       {/* Glowing Circles */}
@@ -56,14 +56,14 @@ function Hero() {
         className="relative z-10"
       >
         <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-          Hi, I'm Feinly !
+          Hi, I'm Feinly!
         </h1>
         <p className="text-xl md:text-2xl font-medium mb-8">
           Cybersecurity Enthusiast & Web Developer
         </p>
 
         {/* Call-to-Action Buttons */}
-        <div className="flex gap-6">
+        <div className="flex flex-wrap justify-center gap-4">
           {/* View Projects */}
           <motion.a
             href="#projects"
@@ -114,8 +114,6 @@ function Hero() {
           </motion.a>
         </div>
       </motion.div>
-      
-
 
       {/* Description */}
       <div className="absolute bottom-10 text-white text-sm md:text-base opacity-80">
