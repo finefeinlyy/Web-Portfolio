@@ -1,124 +1,114 @@
-import React from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import { FaFile, FaGithub, FaLinkedin } from "react-icons/fa";
 
 function Hero() {
-  const controls = useAnimation();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      controls.start({
-        y: offset * 0.3,
-        opacity: 1 - offset / 500,
+    const handleMouseMove = (event) => {
+      setMousePosition({
+        x: event.clientX,
+        y: event.clientY,
       });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [controls]);
+  }, []);
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center text-center text-white px-6 overflow-hidden"
-      style={{
-        background: "linear-gradient(to bottom, #6a00f4, #000000, #0033aa)",
-      }}
+      className="relative min-h-screen flex flex-col justify-center items-start text-left px-10 md:px-20 bg-[#f5f5f5] text-gray-800 font-mono overflow-hidden"
     >
-      {/* Glowing Circles */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div
-          className="absolute bg-indigo-500 opacity-60 rounded-full blur-2xl"
-          style={{ width: "250px", height: "250px", top: "10%", left: "20%" }}
-        ></div>
-        <div
-          className="absolute bg-purple-600 opacity-50 rounded-full blur-2xl"
-          style={{ width: "300px", height: "300px", top: "40%", left: "60%" }}
-        ></div>
-        <div
-          className="absolute bg-cyan-400 opacity-50 rounded-full blur-3xl"
-          style={{ width: "400px", height: "400px", bottom: "10%", left: "30%" }}
-        ></div>
-        <div
-          className="absolute bg-black opacity-40 rounded-full blur-3xl"
-          style={{ width: "500px", height: "500px", bottom: "15%", right: "10%" }}
-        ></div>
-      </div>
+      {/* Subtle Background Animation */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-[#f5f5f5] to-[#e0e0e0] opacity-30 animate-gradient"
+        style={{
+          animation: "gradient 10s ease infinite",
+          backgroundSize: "200% 200%",
+        }}
+      ></div>
+
+      {/* Mouse Trailing Effect */}
+      <div
+        className="absolute w-4 h-4 bg-[#800020] rounded-full pointer-events-none"
+        style={{
+          left: mousePosition.x,
+          top: mousePosition.y,
+          transform: "translate(-50%, -50%)",
+          transition: "all 0.1s ease-out",
+        }}
+      ></div>
 
       {/* Main Content */}
       <motion.div
-        animate={controls}
-        initial={{ y: 0, opacity: 1 }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
         className="relative z-10"
       >
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
-          Hi, I'm Feinly!
+        {/* Heading with Gradient Text */}
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#800020] to-[#a04060]">
+          Hi, I'm Chanidapa.
         </h1>
-        <p className="text-xl md:text-2xl font-medium mb-8">
+        <p className="text-lg md:text-xl font-light text-gray-600 mb-6">
           Cybersecurity Enthusiast & Web Developer
         </p>
 
         {/* Call-to-Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex gap-4">
           {/* View Projects */}
-          <motion.a
-            href="#projects"
-            className="bg-white text-pink-500 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-purple-100 transition duration-300"
-            whileHover={{ scale: 1.1 }}
+          <motion.div
+            className="border border-gray-800 px-6 py-2 rounded-lg text-gray-800 hover:bg-[#800020] hover:border-[#800020] hover:text-white transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View Projects
-          </motion.a>
+            <Link to="/projects">View Projects</Link> {/* Use Link to navigate */}
+          </motion.div>
 
           {/* CV Button */}
           <motion.a
-            href="/Chanidapa_CV.pdf"
+            href="/Chanidapa_Resume_ITGRC copy.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition duration-300"
-            whileHover={{ scale: 1.1 }}
+            className="flex items-center gap-2 border border-gray-800 px-6 py-2 rounded-lg text-gray-800 hover:bg-[#800020] hover:border-[#800020] hover:text-white transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <FaFile size={24} />
-            CV Download
-          </motion.a>
-
-          {/* GitHub Button */}
-          <motion.a
-            href="https://github.com/finefeinlyy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-purple-700 hover:bg-purple-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaGithub size={24} />
-            GitHub
-          </motion.a>
-
-          {/* LinkedIn Button */}
-          <motion.a
-            href="https://www.linkedin.com/in/chanidapa-jitpreedasakul-664705280/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaLinkedin size={24} />
-            LinkedIn
+            <FaFile size={18} /> CV Download
           </motion.a>
         </div>
       </motion.div>
 
-      {/* Description */}
-      <div className="absolute bottom-10 text-white text-sm md:text-base opacity-80">
-        <p>Scroll down to learn more about my work and skills!</p>
-      </div>
+      {/* Social Links */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="absolute bottom-10 left-10 flex gap-4"
+      >
+        <a
+          href="https://github.com/finefeinlyy"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-800 hover:text-[#800020] transition-all duration-300"
+        >
+          <FaGithub size={40} />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/chanidapa-jitpreedasakul-664705280/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-800 hover:text-[#800020] transition-all duration-300"
+        >
+          <FaLinkedin size={40} />
+        </a>
+      </motion.div>
     </section>
   );
 }

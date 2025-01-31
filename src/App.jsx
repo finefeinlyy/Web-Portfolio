@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -9,17 +10,22 @@ import Contact from "./components/Contact";
 
 function App() {
   return (
-    <div className="bg-gray-900 text-gray-100">
-      <Header />
-      <main className="space-y-16">
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="bg-gray-900 text-gray-100 min-h-screen">
+        <Header />
+        <main className="space-y-16 pt-20"> 
+          <Routes>
+            <Route path="/" element={<Hero />} /> 
+            <Route path="/home" element={<Hero />} /> 
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
